@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "ordenacoes.h"
 
 void countingsort(int *v, int n, int r){
 

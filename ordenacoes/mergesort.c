@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "ordenacoes.h"
 #define less(a,b) ((a)<(b))
 #define exch(a,b) {int t;t=a;a=b=t;}
 #define cmpexch(a,b) {if(less(a,b)) exch(a,b)}

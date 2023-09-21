@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include "ordenacoes.h"
 #define less(a,b) ((a)<(b))
 #define exch(a,b) {int t;t=a;a=b;b=t;}
 #define cpmexch(a,b) {if(less(a,b)) exch(a,b)}
