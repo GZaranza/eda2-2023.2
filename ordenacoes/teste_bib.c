@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "ordenacoes.h"
+#include "selectionsort.h"
 
 
 int main(){
@@ -8,8 +8,8 @@ int main(){
 
     int *p=v;
 
-    quicksort(p,0,4);
-
+    selectionsort(p,0,4);
+    
     for(int i=0;i<5;i++){
         printf("%d ", v[i]);
     }

@@ -1,8 +1,6 @@
 #include <stdio.h>
-#include "ordenacoes.h"
-#define less(a,b) ((a)<(b))
-#define exch(a,b) {int t;t=a;a=b;b=t;}
-#define cpmexch(a,b) {if(less(a,b)) exch(a,b)}
+#include "selectionsort.h"
+#include "ordenacoesMacro.h"
 
 
 void selectionsort(int *v, int l, int r){
@@ -21,7 +19,7 @@ void selectionsort(int *v, int l, int r){
 }
 
 
-int main(){
+/*int main(){
 
     int v[5] = {9,5,7,3,4};
 
@@ -34,4 +32,4 @@ int main(){
     }
 
     return 0;
-}
+}*/

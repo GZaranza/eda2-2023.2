@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include "ordenacoes.h"
-#define less(A,B) ((A)<(B))
-#define exch(A,B) {int t; t=A;A=B;B=t;}
-#define cmpexch(A,B){if(less(A,B)) exch(A,B)}
-
+#include "ordenacoesMacro.h"
 void insertionsort(int *v, int l, int r){
 
     for(int i =l+1; i<=r;i++){
