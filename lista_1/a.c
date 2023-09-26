@@ -3,10 +3,10 @@
 typedef struct celula{
     int dado;
     struct celula *prox;
-} celula;
+}celula;
 
 void imprime (celula *le){
-    celula *aux = le;
+    celula *aux = le->prox;
     while(aux != NULL){
         printf("%d -> ", aux->dado);
         aux=aux->prox;
@@ -17,11 +17,14 @@ void imprime (celula *le){
 void imprime_rec (celula *le){
     
 
-    if(le!=NULL){
-        printf("%d->", le->dado);
-        imprime_rec(le->prox);
+   if(le==NULL || le->prox==NULL){
+
+        printf("NULL\n");
+
+        return;
     }
-    else{
-        printf("NULL");
-    }
+
+    printf("%d -> ", le->prox->dado);
+    
+    imprime_rec(le->prox);
 }
