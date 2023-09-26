@@ -7,11 +7,6 @@ typedef struct celula{
     int dado;
 } celula;
 
-typedef struct cabeca{
-    int num_itens;
-    celula *prox;
-} cabeca;
-
 celula *criar_celula (int dado){
     celula *no = malloc(sizeof(celula));
     no->dado = dado;
@@ -56,6 +51,86 @@ void insere_antes(celula *le, int x, int y){
 
 }
 
+int remove_depois(celula *p){
+    celula *aux;
+    aux = p->prox;
+
+    if(aux->prox==NULL){
+        p->prox=NULL;
+    }
+
+    else p->prox = aux->prox;
+
+    return aux->dado;
+}
+
+void remove_elemento(celula *le, int x){
+    
+    celula *aux, *aux_prox;
+    aux = le;
+    aux_prox = le->prox;
+
+    while(aux_prox!=NULL && aux_prox->dado!=x){
+        aux=aux_prox;
+        aux_prox = aux_prox->prox;
+    }
+    
+    if(aux_prox != NULL){
+        aux->prox = aux_prox->prox;
+        free(aux_prox);
+    }
+}
+
+void remove_todos_elementos(celula *le, int x){
+    celula *aux, *aux_prox;
+    aux = le;
+    aux_prox = le->prox;
+
+    int count=0;
+
+    while(aux_prox!=NULL){
+        if(aux_prox->dado==x) count++;
+        aux=aux_prox;
+        aux_prox = aux_prox->prox;
+    }
+    
+
+    for(int i=0;i<=count;i++){
+        while(aux_prox!=NULL && aux_prox->dado!=x){
+        aux=aux_prox;
+        aux_prox = aux_prox->prox;
+        }
+    
+        if(aux_prox != NULL){
+            aux->prox = aux_prox->prox;
+            free(aux_prox);
+        }
+
+        aux = le;
+        aux_prox = le->prox;
+    }
+}
+
+celula *busca(celula *le, int x){
+    celula *aux;
+
+    aux = le;
+
+    while(aux!=NULL && aux->dado!=x){
+        aux = aux->prox;
+    }
+
+    return aux;
+
+}
+
+celula *busca_rec(celula *le, int x){
+
+    if(le==NULL) return NULL;
+    if(le->dado ==x) return le;
+    return busca_rec(le->prox, x);
+}
+
 void imprime (celula *le){
     celula *aux = le->prox;
 
@@ -86,14 +161,46 @@ int main(){
 
     celula *le = criar_celula(0);
 
-    insere_inicio(le,1);
-    insere_inicio(le,2);
     insere_inicio(le,3);
+    insere_inicio(le,2);
+    insere_inicio(le,4);
+    insere_inicio(le,2);
+    insere_inicio(le,5);
+    insere_inicio(le,2);
 
-    insere_antes(le, 4, 5);
+    imprime(le);
+    printf("\n");
+
+
+    celula *b = busca_rec(le, 2);
+
+    printf("%d\n", b->dado);
+
+
+    /*remove_depois(le);
+    imprime(le);
+    printf("\n");*/
+
+    //insere_antes(le, 4, 1);
+
+
+   /*remove_depois(le);
+    imprime(le);
+    printf("\n");
+
+    remove_todos_elementos(le, 2);
     
     imprime(le);
     printf("\n");
-    
+
+    remove_depois(le);
+    imprime(le);
+    printf("\n");
+
+    remove_elemento(le, 1);
+
+    imprime(le);
+    printf("\n");
+    */
 
 }
