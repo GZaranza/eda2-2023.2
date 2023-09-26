@@ -6,21 +6,22 @@ typedef struct celula{
 } celula;
 
 void imprime (celula *le){
-   celula *aux;
-
-   for(aux = le ;aux!=NULL;aux=aux->prox){
+    celula *aux = le;
+    while(aux != NULL){
         printf("%d -> ", aux->dado);
-   }
+        aux=aux->prox;
+    }
     printf("NULL\n");
-   
 }
 
 void imprime_rec (celula *le){
-    if(le == NULL){
-        printf("NULL");
+    
+
+    if(le!=NULL){
+        printf("%d->", le->dado);
+        imprime_rec(le->prox);
     }
     else{
-        printf("%d ->", le->dado);
-        imprime_rec(le->prox);
+        printf("NULL");
     }
 }
