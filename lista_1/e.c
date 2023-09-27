@@ -9,18 +9,35 @@ typedef struct celula {
 void mescla_listas (celula *l1, celula *l2, celula *l3){
 
     celula *anterior = l3;
-    celula *proximo = l3->prox;
+    l1 = l1->prox;
+    l2 = l2->prox;
+
+    if(l1==NULL) anterior->prox=l2;
+    if(l2==NULL) anterior->prox=l1;
 
     while(l1!=NULL && l2!=NULL){
-        if(l1->dado <= l2->dado){
+
+        if(l1->dado < l2->dado){
             anterior->prox = l1;
-            proximo = l1->prox;
+            l1 = l1->prox;
         }
         else{
             anterior->prox =l2;
-            proximo =l2->prox;
+            l2 =l2->prox;
         }
-        anterior=proximo;
-        proximo=proximo->prox;
+        anterior=anterior->prox;
     }
+
+    while(l1!=NULL){
+        anterior->prox = l1;
+        l1 = l1->prox;
+        anterior=anterior->prox;
+    }
+
+    while(l2!=NULL){
+        anterior->prox = l2;
+        l2 = l2->prox;
+        anterior=anterior->prox;
+    }
+    
 }
