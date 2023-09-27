@@ -1,16 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct celula{
-    struct celula *prox;
     int dado;
+    struct celula *prox;
 } celula;
 
 celula *busca(celula *le, int x){
-    celula *aux;
 
-    aux = le;
+    celula *aux= le;
 
-    while(aux->dado!=x){
+    while(aux!=NULL && aux->dado!=x){
         aux = aux->prox;
     }
 

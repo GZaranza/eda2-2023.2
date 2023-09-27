@@ -51,70 +51,55 @@ void insere_antes(celula *le, int x, int y){
 
 }
 
-int remove_depois(celula *p){
-    celula *aux;
-    aux = p->prox;
+int remove_depois (celula *p){
 
-    if(aux->prox==NULL){
-        p->prox=NULL;
+    if(p == NULL || p->prox==NULL){
+       return 0;
     }
-
-    else p->prox = aux->prox;
-
-    return aux->dado;
+    celula *aux=p->prox;
+    p->prox = aux->prox;
+    free(aux);
 }
 
-void remove_elemento(celula *le, int x){
+void remove_elemento (celula *le, int x){
     
-    celula *aux, *aux_prox;
-    aux = le;
-    aux_prox = le->prox;
+    celula *ant=le;
+    celula *pro=le->prox;
 
-    while(aux_prox!=NULL && aux_prox->dado!=x){
-        aux=aux_prox;
-        aux_prox = aux_prox->prox;
+    while(pro->dado!=x && pro!=NULL){
+        ant=pro;
+        pro = pro->prox;
     }
     
-    if(aux_prox != NULL){
-        aux->prox = aux_prox->prox;
-        free(aux_prox);
-    }
+   if(pro->dado == x){
+        ant->prox=pro->prox;
+        free(pro);
+   }
+    
 }
 
-void remove_todos_elementos(celula *le, int x){
-    celula *aux, *aux_prox;
-    aux = le;
-    aux_prox = le->prox;
-
-    int count=0;
-
-    while(aux_prox!=NULL){
-        if(aux_prox->dado==x) count++;
-        aux=aux_prox;
-        aux_prox = aux_prox->prox;
-    }
+void remove_todos_elementos (celula *le, int x){
     
-
-    for(int i=0;i<=count;i++){
-        while(aux_prox!=NULL && aux_prox->dado!=x){
-        aux=aux_prox;
-        aux_prox = aux_prox->prox;
-        }
+    celula *ant=le;
+    celula *pro=le->prox;
     
-        if(aux_prox != NULL){
-            aux->prox = aux_prox->prox;
-            free(aux_prox);
+   while( pro !=NULL){
+        if(pro->dado ==x){
+            ant->prox=pro->prox;
+            celula *aux = pro;
+            pro=pro->prox;
+            free(aux);
         }
-
-        aux = le;
-        aux_prox = le->prox;
-    }
+        else{
+            ant=pro;
+            pro=pro->prox;
+        }
+   }
 }
 
 celula *busca(celula *le, int x){
-    celula *aux;
 
-    aux = le;
+    celula *aux= le;
 
     while(aux!=NULL && aux->dado!=x){
         aux = aux->prox;
@@ -143,6 +128,25 @@ void imprime (celula *le){
 
 }
 
+void mescla_listas (celula *l1, celula *l2, celula *l3){
+
+    celula *anterior = l3;
+    celula *proximo = l3->prox;
+
+    while(l1!=NULL && l2!=NULL){
+        if(l1->dado < l2->dado){
+            anterior->prox=l1->prox;
+            l1=l1->prox;
+        }
+        else{
+            anterior->prox=l2;
+            l2=l2->prox;
+        }
+        anterior=anterior->prox;
+        proximo=proximo->prox;
+    }
+}
+
 void imprime_rec(celula *le){
 
     if(le==NULL || le->prox==NULL){
@@ -159,22 +163,28 @@ void imprime_rec(celula *le){
 
 int main(){
 
-    celula *le = criar_celula(0);
+    celula *l1 = criar_celula(0);
+    celula *l2 = criar_celula(0);
+    celula *l3 = criar_celula(0);
 
-    insere_inicio(le,3);
-    insere_inicio(le,2);
-    insere_inicio(le,4);
-    insere_inicio(le,2);
-    insere_inicio(le,5);
-    insere_inicio(le,2);
+    insere_inicio(l1,5);
+    insere_inicio(l1,3);
+    insere_inicio(l1,1);
 
-    imprime(le);
+    insere_inicio(l2,6);
+    insere_inicio(l2,4);
+    insere_inicio(l2,2);
+
+    imprime(l1);
+    printf("\n");
+    imprime(l2);
+    printf("\n");
+    
+    mescla_listas(l1,l2,l3);
+
+    imprime(l3);
     printf("\n");
 
-
-    celula *b = busca_rec(le, 2);
-
-    printf("%d\n", b->dado);
 
 
     /*remove_depois(le);
