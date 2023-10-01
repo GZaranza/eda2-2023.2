@@ -1,54 +1,19 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
-typedef struct celula{
-    struct celula *prox;
-    int dado;
-} celula;
+int main(){
 
+    char min[10];
 
-int remove_depois (celula *p){
+    char max[10];
 
-    if(p == NULL || p->prox==NULL){
-       return;
-    }
-    celula *aux=p->prox;
-    p->prox = aux->prox;
-    free(aux);
-}
+    scanf("%s", min);
+    scanf("%s",max);
 
-void remove_elemento (celula *le, int x){
-    
-    celula *ant=le;
-    celula *pro=le->prox;
-
-    while(pro->dado!=x && pro!=NULL){
-        ant=pro;
-        pro = pro->prox;
-    }
-    
-   if(pro->dado == x){
-        ant->prox=pro->prox;
-        free(pro);
-   }
-    
-}
-
-void remove_todos_elementos (celula *le, int x){
-    
-    celula *ant=le;
-    celula *pro=le->prox;
-    
-   while( pro !=NULL){
-        if(pro->dado ==x){
-            ant->prox=pro->prox;
-            celula *aux = pro;
-            pro=pro->prox;
-            free(aux);
-        }
-        else{
-            ant=pro;
-            pro=pro->prox;
-        }
-   }
+    printf("\n%d\n", min[strlen(min)-1]-32);
+    printf("\n%d\n", max[0]);
+    /*if(b[0]+32 == a[strlen(a)-1]){
+        printf("igual\n");
+    }*/
+    return 0;
 }
