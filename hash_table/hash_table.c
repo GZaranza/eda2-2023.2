@@ -12,6 +12,11 @@ typedef struct {
     int N; // total de chaves presentes na tabela
 } TH;
 
+void LEinicia(celula *le){
+    le->prox=NULL;
+    le->dado=0;
+}
+
 int LEremove(celula *le, int ch){
     
     celula *anterior=le;
@@ -51,6 +56,15 @@ void LEinsere (celula *le, int ch){
     le->prox=novo;
 }
 
+void LEimprime(celula *le){
+    celula *aux=le->prox;
+    while(aux!=NULL){
+        printf("%d ", aux->dado);
+        aux = aux->prox;
+    }
+    printf("\n");
+}
+
 int hash(TH *h, int ch){
     return ch%h->M;
 }
@@ -58,38 +72,75 @@ int hash(TH *h, int ch){
 
 int THremove (TH *h, int ch){
     int hashing = hash(h,ch);
-    return LEremove(&h->tb[hashing], ch);
+
+    int resultado = LEremove(&h->tb[hashing], ch);
+
+    if(resultado==0) printf("\nA chava %d foi removida\n", ch);
+    else printf("\nA chava %d nao foi removida, pois nao foi encontrada na tabela\n", ch);
+
+    return resultado;
     
 }
 
 int THbusca (TH *h, int ch){
     int hashing = hash(h,ch);
     int busca = LEbusca(&h->tb[hashing], ch);
+
+    /*if(busca==1){
+        printf("\nA chave %d foi encontrada\n", ch);
+    }
+    else printf("\nA chave %d nao foi encontrada\n", ch);*/
     return busca;
 }
 
 void THinsere (TH *h, int ch){
     int hashing = hash(h, ch);
     
-    /*int busca;
-    busca = THbusca(h, ch);*/
+    int busca;
+    busca = THbusca(h, ch);
 
-    LEinsere(&h->tb[hashing], ch);
+    if(busca==0){
+        LEinsere(&h->tb[hashing], ch);
+    }
+    else return;
+
+    
 }
 
+void THimprime(TH *h){
+    for(int i = 0; i < h->M; i++){
+        printf("M = %d : ", i);
+        LEimprime(&h->tb[i]);
+    }
+}
+
+TH *THinicia(TH *h, int m){
+    h->tb=malloc(sizeof(celula)*m);
+    h->M=m;
+    h->N=0;
+
+    for(int i=0; i<m;i++){
+        
+        LEinicia(&h->tb[i]);
+    }
+    return h;
+}
 
 int main(){
-
-   TH *tabela = malloc(sizeof(TH));
-   celula vetor[13];
-   tabela->M = 13;
-   tabela->N = 1000;
-   tabela->tb = vetor; 
-
-    for(int i =0;i<1000;i++){
+    int tam_TH = 13;
+    TH *tabela=malloc(sizeof(TH));
+    tabela=THinicia(tabela, tam_TH);;
+    
+    for(int i =0;i<14;i++){
         THinsere(tabela, i);
+        tabela->N++;
     }
 
-    printf("%d\n", THbusca(tabela, 950));
-    //printf("%d\n", THremove(tabela, 0));
+    THimprime(tabela);
+    THinsere(tabela, 4);
+    THimprime(tabela);
+    /*THbusca(tabela, 9);
+    THremove(tabela, 9);
+    THbusca(tabela, 9);
+    THremove(tabela, 9);*/
 }
