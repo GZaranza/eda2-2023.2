@@ -17,19 +17,18 @@ int LEremove(celula *le, int ch){
     celula *anterior=le;
     celula *proximo= le->prox;
 
-    while(proximo->dado!=ch && proximo!=NULL){
+    while(proximo!=NULL && proximo->dado!=ch ){
         anterior=proximo;
         proximo=proximo->prox;
     }
 
-    if(proximo==NULL){
-        return -1;
-    }
-
-    if(proximo->dado==ch){
+    if(proximo!=NULL){
         anterior->prox=proximo->prox;
+        free(proximo);
         return 0;
     }
+
+    else return -1;
 
 }
 
@@ -59,12 +58,20 @@ int hash(TH *h, int ch){
 
 void THinsere (TH *h, int ch){
     int hashing = hash(h, ch);
-    LEinsere(&h->tb[hashing], ch);
+    int busca = THbusca(h,ch);
+
+    if(busca==0) {
+        LEinsere(&h->tb[hashing], ch);
+        h->N++;
+    }
+    
 }
 
 int THremove (TH *h, int ch){
     int hashing = hash(h,ch);
-    return LEremove(&h->tb[hashing], ch);
+    int remove = LEremove(&h->tb[hashing], ch);
+    if(remove==0) h->N--;
+    return remove;
     
 }
 
