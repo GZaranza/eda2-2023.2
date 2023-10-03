@@ -51,9 +51,25 @@ int LEbusca(celula *le, int ch){
 void LEinsere (celula *le, int ch, char letra){
     celula *novo = malloc(sizeof(celula));
     novo->id=ch;
-    novo->letra = letra;
-    novo->prox=le->prox;
-    le->prox=novo;
+    novo->letra=letra;
+
+    celula *anterior=le;
+    celula *proximo= le->prox;
+
+    while(proximo!=NULL && proximo->id < ch ){
+        anterior=proximo;
+        proximo=proximo->prox;
+    }
+
+    if(proximo!=NULL){
+        novo->prox = proximo;
+        anterior->prox=novo;
+        free(proximo);
+    }
+    else{
+        le->prox=novo;
+        novo->prox=NULL;
+    }
 }
 
 void LEimprime(celula *le){
@@ -62,7 +78,7 @@ void LEimprime(celula *le){
         printf("%c", aux->letra);
         aux = aux->prox;
     }
-    printf("\n");
+    
 }
 
 int hash(TH *h, int ch){
@@ -115,7 +131,7 @@ TH *THinicia(TH *h, int m){
 
 int main(){
 
-    int tam_TH = 104677;
+    int tam_TH = 104729;
     TH *tabela=malloc(sizeof(TH));
     tabela=THinicia(tabela, tam_TH);
 
@@ -123,8 +139,10 @@ int main(){
     char letra;
 
     while(scanf("%d %c",&id, &letra)== 2){
+        THinsere(tabela,id,letra);
     }
-
+    THimprime(tabela);
+    printf("\n");
     return 0;
 }
 
