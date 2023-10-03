@@ -20,7 +20,6 @@ int separa(int *v,int l,int r){
 
     return j;
     
-
 }
 
 
@@ -44,7 +43,7 @@ void quicksort(int *v, int l, int r){
 
 
 
-/*int main(){
+int main(){
 
     int v[5] = {1,5,3,7,6};
 
@@ -59,4 +58,4 @@ void quicksort(int *v, int l, int r){
 
 
     return 0;
-}*/
+}
