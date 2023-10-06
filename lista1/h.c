@@ -5,6 +5,7 @@
 typedef struct celula{
     char cidade[30];
     struct celula *prox;
+    int prox_repetiu;
 }celula;
 
 typedef struct cabeca{
@@ -13,54 +14,42 @@ typedef struct cabeca{
     celula *ultimo;
 }cabeca;
 
-void inserir(cabeca *le, char nova_cidade[30]){
+void inserir(cabeca *le,cabeca *repetidas, char nova_cidade[30]){
     celula *nova = malloc(sizeof(celula));
     strcpy(nova->cidade,nova_cidade);
+    nova->prox_repetiu=0;
     nova->prox=NULL;
 
     if(le->prox==NULL){
         le->prox=nova;
+        le->ultimo=nova;
+        le->num_itens++;
     }
     else{
-        le->ultimo->prox=nova;
-    }
-
-    le->ultimo=nova;
-    le->num_itens++;
-}
-
-void mover_pro_final(cabeca *le, celula *x){
-    celula *atual;
-    
-    atual = le->prox;
-
-    while(atual->prox != x){
-        atual = atual->prox;
-    }
-
-    atual->prox = x->prox;
-    
-    le->ultimo->prox=x;
-    le->ultimo=x;
-    x->prox=NULL;
-    
-}
-
-void organizar_lista(cabeca *le){
-    celula *aux;
-   
-    aux = le->prox;
-    
-    while(aux!=NULL){
-        
-        if(aux->cidade[strlen(aux->cidade)-1]-32 == aux->prox->cidade[0]){
-            //mover_pro_final(le,aux->prox);
-            printf("entrou\n");
+        if(le->ultimo->cidade[strlen(le->ultimo->cidade)-1]-32==nova_cidade[0] && le->ultimo->prox_repetiu==0){
+            le->ultimo->prox_repetiu=1;
+            if(repetidas->prox==NULL){
+                repetidas->prox=nova;
+                repetidas->ultimo=nova;
+                repetidas->num_itens++;
+            }
+            else{
+                repetidas->ultimo->prox=nova;
+                repetidas->ultimo=nova;
+                repetidas->num_itens++;
+            }
+            
         }
-
-        aux=aux->prox;
+        else{
+            le->ultimo->prox=nova;
+            le->ultimo=nova;
+            le->num_itens++;
+        }
     }
+
+    
 }
+
 
 void imprimir(cabeca *le){
     
@@ -68,7 +57,7 @@ void imprimir(cabeca *le){
     aux=le->prox;
     while(aux!=NULL){
         
-        printf("%s->", aux->cidade);
+        printf("%s\n", aux->cidade);
         aux=aux->prox;
     }
 }
@@ -81,19 +70,21 @@ int main(){
    le->prox=NULL;
    le->ultimo=NULL;
 
+   cabeca *repetidas = malloc(sizeof(cabeca));
+   le->num_itens=0;
+   le->prox=NULL;
+   le->ultimo=NULL;
+
    char nova_cidade[30];
 
    while (scanf("%s", nova_cidade)==1){
-
-        inserir(le,nova_cidade);
+        inserir(le,repetidas,nova_cidade);
    }
-    printf("IMPRIMINDO AS ENTRADAS:\n");
-    imprimir(le);
-    //mover_pro_final(le,le->prox->prox);
-    printf("\nIMPRMINDO A LISTA FINAL:\n");
-    organizar_lista(le);
-    imprimir(le);
-    //printf("%d", strlen(le->prox->cidade));
 
+   le->ultimo->prox=repetidas->prox;
+    //printf("IMPRIMINDO AS ENTRADAS:\n");
+    imprimir(le);
+    //printf("\n\n");
+    
     return 0;
 }
