@@ -7,7 +7,39 @@ typedef struct no{
     struct no *dir;
 }no;
 
+typedef struct celula{
+    int dado;
+    struct celula *prox;
+}celula;
 
+
+
+celula *pilha;
+
+void criar_pilha(){
+    pilha =malloc(sizeof(celula));
+    pilha->prox=NULL;
+
+}
+
+void empilha(no *no){
+    celula *novo=malloc(sizeof(celula));
+    novo->dado=no->dado;
+    novo->prox=pilha->prox;
+    pilha->prox=novo;
+}
+
+void desempilha(no *no){
+    celula *lixo;
+    lixo=pilha->prox;
+    pilha->prox=lixo->prox;
+    printf(" %d", lixo->dado);
+    free(lixo);
+}
+
+void liberar_pilha(){
+    pilha->prox=NULL;
+}
 
 no *busca(no *raiz, int x){
 
@@ -44,6 +76,17 @@ no *cria_arvore(int dado){
     return novo;
 }
 
+void pi_preordem(no *raiz){
+
+    criar_pilha();
+    empilha(raiz);
+    
+    while(pilha->prox!=NULL){
+        
+    }
+
+}
+
 void preordem(no *raiz){
 
     if(raiz==NULL) return;
@@ -53,6 +96,22 @@ void preordem(no *raiz){
     preordem(raiz->dir);
 }
 
+void em_ordem(no *raiz){
+    if(raiz==NULL) return;
+
+    em_ordem(raiz->esq);
+    printf(" %d", raiz->dado);
+    em_ordem(raiz->dir);   
+}
+
+void posordem(no *raiz){
+
+    if(raiz==NULL)return;
+    posordem(raiz->esq);
+    posordem(raiz->dir);
+    printf(" %d", raiz->dado);
+
+}
 
 int main(){
 
@@ -65,5 +124,9 @@ int main(){
     }
 
     preordem(arvore);
-
+    printf("\n");
+    em_ordem(arvore);
+    printf("\n");
+    posordem(arvore);
+    printf("\n");
 }
