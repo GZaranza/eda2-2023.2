@@ -6,7 +6,7 @@
 void merge(int *v, int l, int r, int meio){
 
     int aux[5] ;
-   
+    
 
     int i=l;
     int j = meio+1;

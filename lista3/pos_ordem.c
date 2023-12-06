@@ -6,10 +6,14 @@ typedef struct no {
     struct no *esq, *dir;
 }no;
 
-void pre_ordem(no *raiz){
+void pos_ordem(no *raiz){
+
     if(raiz !=NULL){
+
+        pos_ordem(raiz->esq);
+        pos_ordem(raiz->dir);
         printf("%d ", raiz->dado);
-        pre_ordem(raiz->esq);
-        pre_ordem(raiz->dir);
+
     }
+
 }
