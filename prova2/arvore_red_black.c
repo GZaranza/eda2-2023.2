@@ -38,13 +38,15 @@ no *corrige(no * raiz){
         return rotacao_esquerda(raiz);
     }
     if(raiz->esq->cor==VERMELHO && raiz->dir->cor==VERMELHO){
-        return sobe_cor(raiz);
+        sobe_cor(raiz);
+        return raiz;
     }
     if(raiz->esq->cor=VERMELHO && raiz->esq->esq->cor==VERMELHO){
         raiz=rotacao_direita(raiz);
         sobe_cor(raiz);
         return raiz;
     }
+    return raiz;
 }
 
 no *insere(no *raiz, int dado){
@@ -70,7 +72,7 @@ no *insere_rec(no *raiz,int dado){
 
 
 
-}
+
 
 int main(){
 
